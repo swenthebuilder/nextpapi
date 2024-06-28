@@ -4,8 +4,12 @@ import React, { useEffect, useState } from 'react';
 import { createClient } from "polkadot-api";
 import { getSmProvider } from "polkadot-api/sm-provider";
 import { startFromWorker } from "polkadot-api/smoldot/from-worker";
-import { chainSpec as polkadotChainSpec } from "polkadot-api/chains/polkadot";
-import { chainSpec as westend2ChainSpec } from "polkadot-api/chains/westend2";
+import { chainSpec as polkadot } from "polkadot-api/chains/polkadot";
+import { chainSpec as westend2 } from "polkadot-api/chains/westend2";
+import { chainSpec as ksmcc3 } from "polkadot-api/chains/ksmcc3";
+import { chainSpec as rococo_v2_2 } from "polkadot-api/chains/rococo_v2_2";
+import { chainSpec as polkadot_asset_hub } from "polkadot-api/chains/polkadot_asset_hub";
+
 
 interface FinalizedBlock {
   number: number;
@@ -18,13 +22,14 @@ interface ChainState {
 }
 
 const chainSpecs = [
-  { name: "Polkadot", spec: polkadotChainSpec },
-  { name: "westend2", spec: westend2ChainSpec },
+  { name: "rococo_v2_2 ", spec: rococo_v2_2 },
+  { name: "ksmcc3", spec: ksmcc3  },
+  { name: "polkadot_asset_hub", spec: polkadot_asset_hub  },
 ];
 
 export default function MultiChainPolkadotClient() {
   const [chainStates, setChainStates] = useState<ChainState[]>([]);
-
+  const [balance, setBalance] = useState<bigint | null>(null)
   useEffect(() => {
     const clients: any[] = [];
 
